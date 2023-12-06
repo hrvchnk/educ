@@ -11,8 +11,11 @@ secondArray = [
 	{ id: 3, name: 'Cherry' },
 ];
 
-function whatIsTheSame(array, array, display) {
-	display(array.name);
+function whatIsTheSame(array1, array2, display) {
+	let commonElements = array1.filter(element1 => {
+		return array2.some(element2 => element2.id === element1.id);
+	});
+	display(commonElements);
 }
 
 function display(data) {
