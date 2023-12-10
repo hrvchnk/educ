@@ -16,9 +16,36 @@ hierarchicalStructure = {
 };
 
 console.log(hierarchicalStructure);
-function siteElements(array, newArray, numberOfElements) {
-	let newArray = [];
-	console.log(newArray);
+
+function flattenObject(obj, parentKey = '') {
+	return [].concat(
+		...Object.entries(obj).map(([key, value]) => {
+			const currentKey = parentKey ? `${parentKey}.${key}` : key;
+			return value instanceof Object
+				? flattenObject(value, currentKey)
+				: { [currentKey]: value };
+		})
+	);
 }
 
-siteElements(hierarchicalStructure, newArray);
+// function flattenObject(obj, parentKey = '') {
+// 	const flatArray = [];
+
+// 	for (const key in obj) {
+// 		if (obj.hasOwnProperty(key)) {
+// 			const currentKey = parentKey ? `${parentKey}.${key}` : key;
+// 			const value = obj[key];
+
+// 			if (value instanceof Object) {
+// 				flatArray.push(...flattenObject(value, currentKey));
+// 			} else {
+// 				flatArray.push({ [currentKey]: value });
+// 			}
+// 		}
+// 	}
+
+// 	return flatArray;
+// }
+
+const flatArray = flattenObject(hierarchicalStructure);
+console.log(flatArray);
